@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>WebSocket Backend-to-Frontend Test</h1>
+    
+    <div>
+        <label for="conversation-id">Conversation ID:</label>
+        <input type="text" id="conversation-id" value="1234">
+        <button onclick="connectWebSocket()">Connect</button>
+    </div>
+
+    <h2>WebSocket Messages</h2>
+    <div id="messages"></div>
+
+    <script>
+        let socket;
+
+        function connectWebSocket() {
+            const conversationId = document.getElementById("conversation-id").value;
+            const wsUrl = `ws://127.0.0.1:3000/ws?conversation_id=${conversationId}`;
+            
+            // Establish the WebSocket connection
+            socket = new WebSocket(wsUrl);
+
+            socket.onopen = function(event) {
+                displayMessage("Connected to WebSocket!");
+            };
+
+            socket.onmessage = function(event) {
+                displayMessage(`Received: ${event.data}`);
+            };
+
+            socket.onclose = function(event) {
+                displayMessage("WebSocket connection closed");
+            };
+
+            socket.onerror = function(error) {
+                displayMessage(`WebSocket error: ${error.message}`);
+            };
+        }
+
+        function displayMessage(message) {
+            const messagesDiv = document.getElementById("messages");
+            const messageElement = document.createElement("p");
+            messageElement.textContent = message;
+            messagesDiv.appendChild(messageElement);
+        }
+    </script>
+</body>
+</html>

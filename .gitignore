@@ -1,0 +1,22 @@
+# Create .gitignore file
+# Environment files
+.env
+*.env
+env/
+venv/
+__pycache__/
+*.pyc
+
+# Database files
+*.db
+sql_app.db
+
+# MongoDB specific
+mongodb_config/
+
+# IDE specific
+.vscode/
+*.code-workspace
+
+# System specific
+.DS_Store
